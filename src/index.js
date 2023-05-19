@@ -1,0 +1,1 @@
+export { compassNeedle } from './lib/compass-needle.js';
