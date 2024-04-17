@@ -12,11 +12,11 @@ export class GeocamViewerCompassNeedle extends HTMLElement {
   connectedCallback() {
     console.log("comapss-needle connected");
     const node = this;
-    this.plugin = new compassNeedle();
     const parent = this.parentNode;
     if (parent.viewer && parent.viewer.plugin) {
       // Call a method on the parent
-      parent.viewer.plugin(this.plugin);
+        this.plugin = new compassNeedle();
+  parent.viewer.plugin(this.plugin);
     } else {
       console.error(
         "GeocamViewerCompassNeedle must be a child of GeocamViewer"
