@@ -6,11 +6,11 @@ export class GeocamViewerCompassNeedle extends HTMLElement {
     super();
     this.plugin = null;
     // this.yaw = this.getAttribute('yaw') || 0;
-    console.log("comapss-needle init");
+    console.log("comapass-needle init");
   }
 
   connectedCallback() {
-    console.log("comapss-needle connected");
+    console.log("comapass-needle connected");
     const node = this;
     const parent = this.parentNode;
     if (parent.viewer && parent.viewer.plugin) {
@@ -26,7 +26,7 @@ export class GeocamViewerCompassNeedle extends HTMLElement {
 
   disconnectedCallback() {
     this.plugin = null;
-    console.log("comapss-needle disconnected");
+    console.log("comapass-needle disconnected");
     // Clean up the viewer
   }
 }
