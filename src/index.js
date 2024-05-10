@@ -1,5 +1,4 @@
-import { compassNeedle } from './lib/compass-needle.js';
-
+import { compassNeedle } from "./lib/compass-needle.js";
 
 export class GeocamViewerCompassNeedle extends HTMLElement {
   constructor() {
@@ -12,11 +11,12 @@ export class GeocamViewerCompassNeedle extends HTMLElement {
   connectedCallback() {
     console.log("comapass-needle connected");
     const node = this;
+    this.plugin = new compassNeedle();
     const parent = this.parentNode;
-    if (parent.viewer && parent.viewer.plugin) {
+    this.viewer = parent.viewer;
+    if (this.viewer && this.viewer.plugin) {
       // Call a method on the parent
-        this.plugin = new compassNeedle();
-  parent.viewer.plugin(this.plugin);
+      this.viewer.plugin(this.plugin);
     } else {
       console.error(
         "GeocamViewerCompassNeedle must be a child of GeocamViewer"
@@ -26,6 +26,7 @@ export class GeocamViewerCompassNeedle extends HTMLElement {
 
   disconnectedCallback() {
     this.plugin = null;
+    this.viewer = null;
     console.log("comapass-needle disconnected");
     // Clean up the viewer
   }
