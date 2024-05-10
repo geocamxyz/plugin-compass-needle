@@ -27,7 +27,7 @@ The .js file can be imported into your .html file using the below code (This can
 <script type="importmap">
   {
     "imports": {
-      "geocam-viewer": "https://cdn.jsdelivr.net/gh/geocamxyz/plugin-compass-needle@v2.0.3/dist/compass-needle.js"
+      "compass-needle": "https://cdn.jsdelivr.net/gh/geocamxyz/plugin-compass-needle@v2.0.3/dist/compass-needle.js"
     }
   }
 </script>
@@ -39,9 +39,10 @@ import "compass-needle"
 ### Setup:
 The plugin can then be added to the viewer by making the custom element a child of the viewer parent element.  
 
-There are no attribute settings.
 ```
 <geocam-viewer>
   <geocam-viewer-compass-needle></geocam-viewer-compass-needle>
 </geocam-viewer>
 ```
+
+There are no attribute settings.
