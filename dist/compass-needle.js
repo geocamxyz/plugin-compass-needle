@@ -1,11 +1,11 @@
-const l = (t, e = {}, o = "") => {
-  const n = document.createElement(t);
+const l = (o, e = {}, t = "") => {
+  const n = document.createElement(o);
   for (let s in e)
     n.setAttribute(s, e[s]);
-  return n.innerHTML = o, n;
-}, a = (t, e) => (document.getElementById(t) || document.getElementsByTagName("head")[0].prepend(l("STYLE", { type: "text/css" }, e)), !0), r = function(t = {}) {
-  let e, o, n;
-  a("geocam-compass-needle", `
+  return n.innerHTML = t, n;
+}, r = (o, e) => (document.getElementById(o) || document.getElementsByTagName("head")[0].prepend(l("STYLE", { type: "text/css" }, e)), !0), a = function(o = {}) {
+  let e, t, n;
+  r("geocam-compass-needle", `
   .geocam-compass-needle {
       background-image:
         url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M21.052 15.665l.06-.171L16 1.914l-5.111 13.58 5.097 14.694zm-8.93.335h7.754l-3.888 11.145z'/%3E%3Cpath fill='none' d='M0 0h32v32H0z'/%3E%3C/svg>");
@@ -15,26 +15,38 @@ const l = (t, e = {}, o = "") => {
       height: 64px;
     }
   `), this.init = function(c) {
-    e = c, n = l("DIV", { class: "geocam-compass-needle" }), e.addControl(n, "right-top"), o = e.facing((i) => {
+    e = c, n = l("DIV", { class: "geocam-compass-needle" }), e.addControl(n, "right-top"), t = e.facing((i) => {
       i !== null && (n.style.transform = `rotate(${360 - i}deg)`);
     });
   }, this.destroy = function() {
-    o(), e.wrapper.removeChild(n);
+    t(), e.wrapper.removeChild(n);
   };
 };
 class d extends HTMLElement {
   constructor() {
-    super(), this.plugin = null, console.log("comapass-needle init");
+    super(), this.plugin = null, this.viewer = null, console.log("comapass-needle init");
   }
   connectedCallback() {
-    console.log("comapass-needle connected"), this.plugin = new r();
-    const e = this.parentNode;
-    this.viewer = e.viewer, this.viewer && this.viewer.plugin ? this.viewer.plugin(this.plugin) : console.error(
-      "GeocamViewerCompassNeedle must be a child of GeocamViewer"
-    );
+    console.log("comapass-needle connected");
+    const e = this.closest("geocam-viewer");
+    if (!e) {
+      console.error(
+        "GeocamViewerCompassNeedle must be a child of GeocamViewer"
+      );
+      return;
+    }
+    const t = () => {
+      const n = e.viewer;
+      if (n && typeof n.plugin == "function") {
+        if (this.plugin) return;
+        this.viewer = n, this.plugin = new a(), this.viewer.plugin(this.plugin);
+      } else
+        setTimeout(t, 50);
+    };
+    t();
   }
   disconnectedCallback() {
-    this.plugin = null, this.viewer = null, console.log("comapass-needle disconnected");
+    this.plugin && typeof this.plugin.destroy == "function" && this.plugin.destroy(), this.plugin = null, this.viewer = null, console.log("comapass-needle disconnected");
   }
 }
 window.customElements.define(
